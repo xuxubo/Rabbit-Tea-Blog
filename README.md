@@ -2,6 +2,8 @@
 
 Template for web app using MoonBit, Rabbit-TEA, and Tailwind CSS.
 
+![demo](image.png)
+
 ## Getting started
 
 To get better completion experience in Visual Studio Code, you can install 
