@@ -16,22 +16,18 @@ fn update(msg : Message, model : Model) -> (@tea.Command[Message], Model) {
 
 fn button_view(value : String, msg : Message) -> @html.Html[Message] {
   let class = "p-4 bg-pink-200 w-24 rounded-lg select-none text-center hover:-translate-y-1 hover:shadow-lg active:bg-pink-300 active:shadow-sm transition-all"
-  @html.div(click=msg, ~class, [@html.text(value)])
-}
-
-fn title_view(title : String) -> @html.Html[Message] {
-  @html.h1(
-    class="text-2xl font-bold text-center select-none",
-    [@html.text(title)],
-  )
+  div(click=msg, ~class, [text(value)])
 }
 
 fn view(model : Model) -> @html.Html[Message] {
-  @html.div(
+  div(
     class="w-[600px] h-[100px] m-10",
     [
-      title_view("Counter \{model.count}"),
-      @html.div(
+      h1(
+        class="text-2xl font-bold text-center select-none",
+        [text("Counter \{model.count}")],
+      ),
+      div(
         class="flex justify-center gap-8 m-8",
         [button_view("+", Increment), button_view("-", Decrement)],
       ),
@@ -39,7 +35,7 @@ fn view(model : Model) -> @html.Html[Message] {
   )
 }
 
-/// NOTE: This prgram is only available in the js backend, 
+/// NOTE: This program is only available in the js backend, 
 /// see README.md to getting started.
 fn main {
   let model = { count: 0 }
