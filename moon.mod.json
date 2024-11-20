@@ -1,8 +1,8 @@
 {
   "name": "username/rabbit-tea-tailwind",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "deps": {
-    "Yoorkin/rabbit-tea": "0.2.2"
+    "Yoorkin/rabbit-tea": "0.2.5"
   },
   "readme": "README.md",
   "repository": "",

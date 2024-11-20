@@ -16,7 +16,7 @@ fn update(msg : Message, model : Model) -> (@tea.Command[Message], Model) {
 
 fn button_view(value : String, msg : Message) -> @html.Html[Message] {
   let class = "p-4 bg-pink-200 w-24 rounded-lg select-none text-center hover:-translate-y-1 hover:shadow-lg active:bg-pink-300 active:shadow-sm transition-all"
-  div(click=msg, ~class, [text(value)])
+  div(click=msg, class~, [text(value)])
 }
 
 fn view(model : Model) -> @html.Html[Message] {
@@ -39,5 +39,5 @@ fn view(model : Model) -> @html.Html[Message] {
 /// see README.md to getting started.
 fn main {
   let model = { count: 0 }
-  @tea.startup(~model, ~update, ~view)
+  @tea.startup(model~, update~, view~)
 }
