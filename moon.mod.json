@@ -2,12 +2,11 @@
   "name": "username/rabbit-tea-tailwind",
   "version": "0.1.1",
   "deps": {
-    "Yoorkin/rabbit-tea": "0.2.5"
+    "Yoorkin/rabbit-tea": "0.4.2"
   },
   "readme": "README.md",
   "repository": "",
   "license": "Apache-2.0",
   "keywords": [],
-  "description": "",
-  "source": "src"
+  "description": ""
 }
