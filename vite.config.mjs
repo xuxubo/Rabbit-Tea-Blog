@@ -14,8 +14,9 @@ async function buildMoon() {
                 reject(new Error('moon build failed'))
             }
         })
-    })
-    fs.copyFileSync('target/js/release/build/main/main.js', 'main.js')
+    }) 
+
+    fs.copyFileSync('target/js/release/build/main/main.js', './src/main.js')
 }
 
 /**
@@ -33,6 +34,7 @@ const plugin = {
 }
 
 export default defineConfig({
+    root: 'src',
     plugins: [plugin],
     css: {
         postcss: {

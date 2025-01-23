@@ -2,5 +2,5 @@ target/
 .mooncakes/
 node_modules/
 package-lock.json
-dist
-main.js
+./src/dist
+./src/main.js
