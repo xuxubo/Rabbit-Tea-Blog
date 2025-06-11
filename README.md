@@ -9,14 +9,18 @@ Template for web app using MoonBit, Rabbit-TEA, and Tailwind CSS.
 Clone this repository and run the following commands in the project directory:
 
 ```
-bun i
-bun run dev
-```
-or using npm:
-
-```
+moon update
+moon add Yoorkin/rabbit-tea
 npm i
 npm run dev
+```
+or using bun:
+
+```
+moon update
+moon add Yoorkin/rabbit-tea
+bun i
+bun run dev
 ```
 ## Debug
 
@@ -38,6 +42,12 @@ To get better completion experience in vscode, you can install
 the [Tailwind CSS IntelliSense extension](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss).
 
 ## Release build
+
+```
+npm run build
+```
+
+or using bun:
 
 ```
 bun run build

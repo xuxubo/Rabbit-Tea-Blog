@@ -5,7 +5,7 @@ fnalias @html.(div, text, h1)
 fnalias @tea.none
 
 ///|
-typealias @html.Html[M]
+typealias @html.Html
 
 ///|
-typealias @tea.Command[M]
+typealias @tea.Cmd
