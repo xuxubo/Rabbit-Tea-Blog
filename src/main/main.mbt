@@ -19,20 +19,20 @@ fn update(msg : Msg, model : Model) -> (Cmd[Msg], Model) {
 
 ///|
 fn button(value : String, msg : Msg) -> Html[Msg] {
-  let class =
+  let klass =
     #| p-4 bg-pink-200 w-24 rounded-lg select-none text-center 
     #| hover:-translate-y-1 hover:shadow-lg active:bg-pink-300 
     #| active:shadow-sm transition-all
-  div(click=msg, class~, [text(value)])
+  div(click=msg, klass~, [text(value)])
 }
 
 ///|
 fn view(model : Model) -> Html[Msg] {
-  div(class="w-[600px] h-[100px] m-10", [
-    h1(class="text-2xl font-bold text-center select-none", [
+  div(klass="w-[600px] h-[100px] m-10", [
+    h1(klass="text-2xl font-bold text-center select-none", [
       text("\{model.count}"),
     ]),
-    div(class="flex justify-center gap-8 m-8", [
+    div(klass="flex justify-center gap-8 m-8", [
       button("+", Increment),
       button("-", Decrement),
     ]),
