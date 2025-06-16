@@ -36,10 +36,12 @@ Use the following steps to debug MoonBit code in VSCode:
 
 4. Open the browser and visit the link displayed in the terminal. The breakpoints will be triggered when the code is executed.
 
-## Tailwind CSS 
+## Use with Tailwind CSS 
 
 To get better completion experience in vscode, you can install 
 the [Tailwind CSS IntelliSense extension](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss).
+
+The `.vscode/settings.json` file is configured to enable Tailwind CSS completions specifically for MoonBit.
 
 ## Release build
 
