@@ -15,7 +15,21 @@
   - Markdown 文件解析与渲染
   - 简洁的页面结构与样式示例
 
-示例站点：[beta.mooncakes.io](https://github.com/moonbit-community/rabbit-tea) （rabbit-tea 官方示例）
+项目展示站点（已上线）：[个人博客展示](http://buildbyte.top/html/index.html)
+## 仓库动态内容说明
+
+该博客示例 内容来源于 Git 仓库：
+
+文章存储
+Markdown 文件 (.md) 存放在仓库的特定目录（如 articles/）。
+
+自动同步
+提交或更新仓库文件后，网站会通过 Git API / fetch 请求 自动获取最新内容并展示，无需手动更新前端代码。
+
+展示方式
+页面会根据仓库文件生成文章列表，用户点击即可查看对应 Markdown 内容。
+
+换句话说，你只需向仓库提交新的文章或修改内容，网站会实时同步更新，无需重新部署前端。
 
 ## 📦 环境要求
 
