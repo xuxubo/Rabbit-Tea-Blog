@@ -160,8 +160,8 @@ Marked 文档
 
 ## 📚 学习资源
 
-- [MoonBit 官方文档](https://moonbitlang.github.io/)
-- [rabbit-tea GitHub](https://github.com/moonbitlang/rabbit-tea)
+- [MoonBit 官方文档](https://docs.moonbitlang.com/en/latest/)
+- [rabbit-tea GitHub](https://github.com/moonbit-community/rabbit-tea)
 - [Marked (Markdown 解析)](https://marked.js.org/)
 
 ## 🏁 任务目标
