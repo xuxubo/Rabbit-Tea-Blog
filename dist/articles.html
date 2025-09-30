@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文章 - 我的博客</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f8f9fa;
+      }
+
+      /* 头部导航 */
+      header {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #4a5568;
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: #667eea;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #4a5568;
+        font-weight: 500;
+        font-size: 16px;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: #667eea;
+      }
+
+      /* 主要内容区域 */
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      /* 页面标题 */
+      .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .page-title {
+        font-size: 32px;
+        color: #2d3748;
+        margin-bottom: 12px;
+      }
+
+      .page-subtitle {
+        color: #718096;
+        font-size: 18px;
+      }
+
+      /* 文章列表 */
+      .articles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      .article-card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .article-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .article-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .article-content {
+        padding: 25px;
+      }
+
+      .article-meta {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+        color: #718096;
+        font-size: 14px;
+      }
+
+      .article-meta span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .article-title {
+        font-size: 22px;
+        color: #2d3748;
+        margin-bottom: 15px;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .article-title:hover {
+        color: #667eea;
+      }
+
+      .article-excerpt {
+        color: #718096;
+        margin-bottom: 20px;
+        line-height: 1.7;
+      }
+
+      .read-more {
+        display: inline-block;
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+      }
+
+      .read-more:hover {
+        color: #4299e1;
+      }
+
+      /* 分页导航 */
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 40px;
+      }
+      .load-more-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        border: 2px solid #667eea;
+        background: #667eea;
+        color: #fff;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 6px 14px rgba(102, 126, 234, 0.25);
+      }
+      .load-more-btn:hover:not(:disabled) {
+        filter: brightness(1.06);
+        transform: translateY(-1px);
+      }
+      .load-more-btn:active:not(:disabled) {
+        transform: translateY(0) scale(0.99);
+      }
+      .load-more-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        filter: grayscale(10%);
+      }
+      .pagination button {
+        padding: 10px 16px;
+        border: 2px solid #e2e8f0;
+        background: white;
+        color: #4a5568;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .pagination button:hover:not(:disabled) {
+        border-color: #667eea;
+        color: #667eea;
+        background: #f8fafc;
+      }
+
+      .pagination button.active {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+      }
+
+      .pagination button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .pagination .page-info {
+        color: #718096;
+        font-size: 16px;
+        margin: 0 15px;
+      }
+
+      /* 页脚 */
+      footer {
+        background: #2d3748;
+        color: white;
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .footer-logo {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: white;
+      }
+
+      .footer-logo span {
+        color: #667eea;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        gap: 25px;
+        margin-bottom: 20px;
+      }
+
+      .footer-links a {
+        color: #cbd5e0;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: #667eea;
+      }
+
+      .copyright {
+        color: #a0aec0;
+        font-size: 14px;
+      }
+
+      /* 响应式设计 */
+      @media (max-width: 768px) {
+        .articles-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+          gap: 15px;
+        }
+
+        .page-title {
+          font-size: 28px;
+        }
+
+        .article-content {
+          padding: 20px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        nav {
+          flex-direction: column;
+          height: auto;
+          padding: 15px 20px;
+          gap: 15px;
+        }
+
+        .pagination {
+          flex-wrap: wrap;
+        }
+
+        .pagination button {
+          padding: 8px 12px;
+          font-size: 14px;
+        }
+      }
+    </style>
+    <script src="./articles.js" type="module"></script>
+  </head>
+  <body>
+    <!-- 头部导航 -->
+    <header>
+      <nav>
+        <a href="#" class="logo">我的<span>博客</span></a>
+        <ul class="nav-links">
+          <li><a href="./index.html">首页</a></li>
+          <li><a href="#" class="active">文章</a></li>
+          <li><a href="./about.html">关于</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- 主要内容 -->
+    <main>
+      <div class="page-header">
+        <h1 class="page-title">所有文章</h1>
+        <p class="page-subtitle">探索我的技术分享和思考</p>
+      </div>
+
+      <div class="articles-grid" id="articlesContainer">
+        <!-- 文章将通过JavaScript动态生成 -->
+      </div>
+
+      <div class="pagination" id="paginationContainer">
+        <!-- 分页将通过JavaScript动态生成 -->
+      </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-logo">我的<span>博客</span></div>
+        <ul class="footer-links">
+          <li><a href="./index.html">首页</a></li>
+          <li><a href="#" class="active">文章</a></li>
+          <li><a href="./about.html">关于</a></li>
+        </ul>
+        <p class="copyright">© 2024 张小明的博客. 保留所有权利.</p>
+      </div>
+    </footer>
+
+    <script>
+      // 分页配置
+      const articlesPerPage = 6;
+      let currentPage = 1;
+      const totalPages = Math.ceil(articles.length / articlesPerPage);
+
+      // 渲染文章列表
+      function renderArticles(page) {
+        const startIndex = (page - 1) * articlesPerPage;
+        const endIndex = startIndex + articlesPerPage;
+        const pageArticles = articles.slice(startIndex, endIndex);
+
+        const container = document.getElementById("articlesContainer");
+        container.innerHTML = "";
+
+        pageArticles.forEach((article) => {
+          const articleCard = document.createElement("article");
+          articleCard.className = "article-card";
+          articleCard.innerHTML = `
+                    <div class="article-image">${article.category}</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>📅 ${article.date}</span>
+                            <span>⏱️ ${article.readTime}</span>
+                        </div>
+                        <a href="#" class="article-title">${article.title}</a>
+                        <p class="article-excerpt">${article.excerpt}</p>
+                        <a href="#" class="read-more">阅读全文 →</a>
+                    </div>
+                `;
+          container.appendChild(articleCard);
+        });
+      }
+
+      // 渲染分页
+      function renderPagination() {
+        const container = document.getElementById("paginationContainer");
+
+        // 创建分页按钮
+        let paginationHTML = "";
+
+        // 上一页按钮
+        paginationHTML += `
+                <button id="prevBtn" ${currentPage === 1 ? "disabled" : ""}>
+                    ← 上一页
+                </button>
+            `;
+
+        // 页码信息
+        paginationHTML += `
+                <span class="page-info">第 ${currentPage} 页，共 ${totalPages} 页</span>
+            `;
+
+        // 下一页按钮
+        paginationHTML += `
+                <button id="nextBtn" ${
+                  currentPage === totalPages ? "disabled" : ""
+                }>
+                    下一页 →
+                </button>
+            `;
+
+        container.innerHTML = paginationHTML;
+
+        // 添加事件监听器
+        document.getElementById("prevBtn").addEventListener("click", () => {
+          if (currentPage > 1) {
+            currentPage--;
+            renderArticles(currentPage);
+            renderPagination();
+          }
+        });
+
+        document.getElementById("nextBtn").addEventListener("click", () => {
+          if (currentPage < totalPages) {
+            currentPage++;
+            renderArticles(currentPage);
+            renderPagination();
+          }
+        });
+      }
+
+      // 初始化页面
+      document.addEventListener("DOMContentLoaded", function () {
+        renderArticles(currentPage);
+        renderPagination();
+
+        // 为所有"阅读全文"链接添加点击事件（在实际应用中会跳转到文章详情页）
+        document.addEventListener("click", function (e) {
+          if (
+            e.target.classList.contains("read-more") ||
+            e.target.classList.contains("article-title")
+          ) {
+            e.preventDefault();
+            // 在实际应用中，这里会跳转到对应的文章详情页
+            alert("点击了文章链接！在实际应用中会跳转到文章详情页。");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

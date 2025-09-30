@@ -2,13 +2,14 @@
   "name": "username/rabbit-tea-tailwind",
   "version": "0.2.0",
   "deps": {
-    
+    "Yoorkin/rabbit-tea": "0.10.10",
+    "moonbitlang/x": "0.4.34"
   },
   "readme": "README.md",
   "repository": "",
   "license": "Apache-2.0",
   "keywords": [],
   "description": "",
-  "source": "src",
+  "source": "src/",
   "preferred-target": "js"
 }

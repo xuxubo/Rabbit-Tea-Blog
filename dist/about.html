@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>关于 - 我的博客</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.8;
+        color: #333;
+        background-color: #f8f9fa;
+      }
+
+      /* 头部导航 */
+      header {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #4a5568;
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: #667eea;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #4a5568;
+        font-weight: 500;
+        font-size: 16px;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: #667eea;
+      }
+
+      /* 主要内容区域 */
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      /* 关于页面内容 */
+      .about-container {
+        background: white;
+        border-radius: 16px;
+        padding: 50px;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .about-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .about-header h1 {
+        font-size: 36px;
+        color: #2d3748;
+        margin-bottom: 15px;
+      }
+
+      .about-header p {
+        color: #718096;
+        font-size: 18px;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .about-content {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 50px;
+        align-items: start;
+      }
+
+      .profile-section {
+        text-align: center;
+      }
+
+      .profile-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 25px;
+        border: 4px solid #667eea;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .profile-name {
+        font-size: 28px;
+        color: #2d3748;
+        margin-bottom: 10px;
+      }
+
+      .profile-title {
+        color: #667eea;
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #edf2f7;
+        color: #4a5568;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .social-links a:hover {
+        background: #667eea;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .bio-section h2 {
+        font-size: 28px;
+        color: #2d3748;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #edf2f7;
+      }
+
+      .bio-section p {
+        margin-bottom: 20px;
+        color: #4a5568;
+        font-size: 17px;
+      }
+
+      .skills-section {
+        margin-top: 30px;
+      }
+
+      .skills-section h3 {
+        font-size: 22px;
+        color: #2d3748;
+        margin-bottom: 20px;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      .skill-item {
+        background: #f8fafc;
+        padding: 12px 16px;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+        font-weight: 500;
+        color: #4a5568;
+      }
+
+      .experience-section {
+        margin-top: 40px;
+      }
+
+      .experience-section h3 {
+        font-size: 22px;
+        color: #2d3748;
+        margin-bottom: 20px;
+      }
+
+      .experience-item {
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+      }
+
+      .experience-item h4 {
+        color: #2d3748;
+        margin-bottom: 8px;
+        font-size: 18px;
+      }
+
+      .experience-item .company {
+        color: #667eea;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      .experience-item .duration {
+        color: #718096;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      /* 返回按钮 */
+      .back-to-home {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 20px;
+        transition: color 0.3s ease;
+      }
+
+      .back-to-home:hover {
+        color: #4299e1;
+      }
+
+      /* 页脚 */
+      footer {
+        background: #2d3748;
+        color: white;
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .footer-logo {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: white;
+      }
+
+      .footer-logo span {
+        color: #667eea;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        gap: 25px;
+        margin-bottom: 20px;
+      }
+
+      .footer-links a {
+        color: #cbd5e0;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: #667eea;
+      }
+
+      .copyright {
+        color: #a0aec0;
+        font-size: 14px;
+      }
+
+      /* 响应式设计 */
+      @media (max-width: 768px) {
+        .about-container {
+          padding: 30px 20px;
+        }
+
+        .about-content {
+          grid-template-columns: 1fr;
+          gap: 30px;
+        }
+
+        .profile-image {
+          width: 150px;
+          height: 150px;
+          font-size: 18px;
+        }
+
+        .profile-name {
+          font-size: 24px;
+        }
+
+        .skills-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+          gap: 15px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        nav {
+          flex-direction: column;
+          height: auto;
+          padding: 15px 20px;
+          gap: 15px;
+        }
+
+        .about-header h1 {
+          font-size: 28px;
+        }
+
+        .social-links {
+          gap: 10px;
+        }
+
+        .social-links a {
+          width: 32px;
+          height: 32px;
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 头部导航 -->
+    <header>
+      <nav>
+        <a href="#" class="logo">我的<span>博客</span></a>
+        <ul class="nav-links">
+          <li><a href="./index.html">首页</a></li>
+          <li><a href="./articles.html">文章</a></li>
+          <li><a href="#" class="active">关于</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- 主要内容 -->
+    <main>
+      <a href="javascript:history.back()" class="back-to-home">← 返回首页</a>
+
+      <div class="about-container">
+        <div class="about-header">
+          <h1>关于我</h1>
+          <p>了解我的背景、技能和职业经历</p>
+        </div>
+
+        <div class="about-content">
+          <div class="profile-section">
+            <div class="profile-image">张小明</div>
+            <h2 class="profile-name">张小明</h2>
+            <p class="profile-title">前端开发者 & 技术博主</p>
+            <div class="social-links">
+              <a href="#" aria-label="GitHub">GH</a>
+              <a href="#" aria-label="Twitter">TW</a>
+              <a href="#" aria-label="LinkedIn">LI</a>
+              <a href="#" aria-label="Email">EM</a>
+            </div>
+          </div>
+
+          <div class="bio-section">
+            <h2>个人简介</h2>
+            <p>
+              你好！我是张小明，一名热爱前端开发的技术爱好者。我专注于构建高性能、用户友好的Web应用，并热衷于分享技术知识和最佳实践。
+            </p>
+            <p>
+              我拥有5年前端开发经验，擅长React、Vue、TypeScript等现代前端技术栈。在工作之余，我喜欢摄影、阅读技术书籍和探索新的编程语言。
+            </p>
+            <p>
+              这个博客是我分享技术心得、项目经验和生活感悟的地方。我希望通过写作帮助更多开发者成长，同时也记录自己的学习历程。
+            </p>
+
+            <div class="skills-section">
+              <h3>技术栈</h3>
+              <div class="skills-grid">
+                <div class="skill-item">React & React Native</div>
+                <div class="skill-item">Vue.js & Nuxt.js</div>
+                <div class="skill-item">TypeScript & JavaScript</div>
+                <div class="skill-item">HTML5 & CSS3</div>
+                <div class="skill-item">Node.js & Express</div>
+                <div class="skill-item">Webpack & Vite</div>
+                <div class="skill-item">Git & GitHub</div>
+                <div class="skill-item">Jest & Testing Library</div>
+              </div>
+            </div>
+
+            <div class="experience-section">
+              <h3>工作经历</h3>
+              <div class="experience-item">
+                <h4>高级前端工程师</h4>
+                <div class="company">创新科技有限公司</div>
+                <div class="duration">2022年6月 - 至今</div>
+                <p>
+                  负责公司核心产品的前端架构设计和开发，带领3人前端团队，使用React和TypeScript构建高性能Web应用。
+                </p>
+              </div>
+              <div class="experience-item">
+                <h4>前端开发工程师</h4>
+                <div class="company">数字未来科技</div>
+                <div class="duration">2020年3月 - 2022年5月</div>
+                <p>
+                  参与多个大型项目的前端开发，主要使用Vue.js技术栈，负责组件库开发和性能优化工作。
+                </p>
+              </div>
+              <div class="experience-item">
+                <h4>初级前端工程师</h4>
+                <div class="company">启明星网络</div>
+                <div class="duration">2019年1月 - 2020年2月</div>
+                <p>
+                  负责公司官网和内部管理系统的前端开发，学习并实践了现代前端开发的最佳实践。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-logo">我的<span>博客</span></div>
+        <ul class="footer-links">
+          <li><a href="./index.html">首页</a></li>
+          <li><a href="./articles.html">文章</a></li>
+          <li><a href="#" class="active">关于</a></li>
+        </ul>
+        <p class="copyright">© 2024 张小明的博客. 保留所有权利.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("关于页面已加载");
+      });
+    </script>
+  </body>
+</html>
+```

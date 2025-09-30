@@ -1,207 +1,4 @@
-///|
-/// 消息枚举
-enum Msg {
-  Go(String, String)
-}
-
-///|
-/// 模型
-struct NavItem {
-  navItems : Array[String]
-  path : Array[String]
-}
-
-///|
-struct Model {
-  nav : NavItem
-  current : String
-  current_path : String
-}
-
-///|
-/// 更新函数
-fn update(msg : Msg, model : Model) -> (Cmd[Msg], Model) {
-  match msg {
-    Go(item, path) => (none(), { ..model, current: item, current_path: path }) // 更新当前选中导航
-  }
-}
-
-///|
-/// 渲染单个导航项
-fn navLink(item : String, current : String, path : String) -> Html[Msg] {
-  let activeClass = if current == item { "#667eea font-bold" } else { "" }
-  div(
-    click=Go(item, path),
-    class="cursor-pointer px-4 py-2 hover: #667eea " + activeClass,
-    [@html.a([text(item)], href=path)],
-  )
-}
-
-///|
-fn navBar(model : Model) -> Html[Msg] {
-  // 遍历 navItems
-  @html.ul(
-    class="nav-links",
-    model.nav.navItems.map(fn(item) {
-      let index = model.nav.navItems.find_index(fn(x) { x == item }).unwrap()
-      let path = model.nav.path[index]
-      @html.li([navLink(item, model.current, path)])
-    }),
-  )
-}
-
-///|
-fn view(model : Model) -> Html[Msg] {
-  navBar(model)
-}
-
-///|
-struct Introduction {
-  name : String
-  lable : String
-  introduce : String
-  qq : String
-  wx : String
-  em : String
-  ph : String
-}
-
-///|
-/// 定义消息类型来处理 HTTP 响应
-enum PersonMsg {
-  PersonLoaded(Result[Introduction, String])
-  LoadPerson
-  NoOp
-}
-
-///|
-/// 从 JSON 解析 Introduction 结构
-/// 解析单个 Introduction 对象
-fn parseIntroduction(json : Json) -> Result[Introduction, String] {
-  match json {
-    // 直接匹配需要的字段
-    // 允许有其他无关字段
-    {
-      "name": String(name),
-      "lable": String(lable),
-      "introduce": String(introduce),
-      "qq": String(qq),
-      "wx": String(wx),
-      "em": String(em),
-      "ph": String(ph),
-      ..
-    } => Ok({ name, lable, introduce, qq, wx, em, ph })
-
-    // 如果有缺少的字段则报错
-    _ => Err("Invalid introduction data")
-  }
-}
-
-///|
-/// 发送 HTTP GET 请求获取个人信息
-fn getPersonDetail() -> @tea.Cmd[PersonMsg] {
-  @http.get(
-    "/raw/main/personal.json", // 使用真实的 API 端点
-    expect=Json(
-      PersonLoaded(_), // 成功时的消息构造函数
-      parseIntroduction, // JSON 解析函数
-    ),
-  )
-}
-
-///|
-
-///|
-/// 使用 HTTP 请求的完整示例
-struct PersonModel {
-  person : Introduction?
-  loading : Bool
-  error : String?
-}
-
-///|
-/// 更新函数处理 HTTP 响应
-fn personUpdate(
-  msg : PersonMsg,
-  model : PersonModel,
-) -> (@tea.Cmd[PersonMsg], PersonModel) {
-  match msg {
-    LoadPerson =>
-      (
-        getPersonDetail(), // 发送 HTTP 请求
-        { ..model, loading: true, error: None },
-      )
-    PersonLoaded(result) =>
-      match result {
-        Ok(person) =>
-          (@tea.none(), { person: Some(person), loading: false, error: None })
-        Err(error) =>
-          (@tea.none(), { person: None, loading: false, error: Some(error) })
-      }
-    NoOp => (@tea.none(), model) // No changes for dummy events
-  }
-}
-
-///|
-/// 视图函数显示个人信息
-fn personView(model : PersonModel) -> @html.Html[PersonMsg] {
-  div([
-    if model.loading {
-      div([text("加载中...")])
-    } else {
-      match model.person {
-        Some(person) =>
-          div([
-            @html.img(
-              style=["margin: 0 auto"],
-              id="",
-              class="",
-              src="https://s1.aigei.com/src/img/png/47/4749c783cf74474ea7c3f600dbcb7e8f.png?imageMogr2/auto-orient/thumbnail/!282x282r/gravity/Center/crop/282x282/quality/85/%7CimageView2/2/w/282&e=2051020800&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:nsyS9yzAzA9KJYkEhuxFZi_Z2fI=",
-              alt="头像",
-              title="",
-              width=50,
-              height=50,
-              border=10,
-              [],
-            ),
-            @html.h1([text(person.name)]),
-            @html.p([text(person.lable)]),
-            @html.p([text(person.introduce)]),
-            @html.div(class="social-links", [
-              @html.a(href=person.qq, [text("QQ")]),
-              @html.a(href=person.wx, [text("WX")]),
-              @html.a(href=person.ph, [text("PH")]),
-              @html.a(href=person.em, [text("EM")]),
-            ]),
-          ])
-        None =>
-          match model.error {
-            Some(error) => div([text("错误: " + error)])
-            None =>
-              div([
-                text("点击加载个人信息"),
-                @html.button(click=LoadPerson, [text("加载")]),
-              ])
-          }
-      }
-    },
-  ])
-}
-
-///|
-/// 启动带 HTTP 请求的应用
-fn startPersonApp() -> Unit {
-  fn initialize(url : @url.Url) -> (@tea.Cmd[PersonMsg], PersonModel) {
-    (getPersonDetail(), { person: None, loading: true, error: None })
-  }
-
-  @tea.application(
-    initialize~,
-    update=personUpdate,
-    view=personView,
-    mount="home",
-  )
-}
+// 文章卡片数据（从 md 粗提取标题/摘要/时长）
 
 ///|
 struct ArticleCard {
@@ -456,6 +253,16 @@ fn articleListView(model : ArticleModel) -> @html.Html[ArticleMsg] {
             }),
           ],
         ),
+        // 加载更多按钮
+        if model.names.length() > model.loaded_count {
+          @html.div(class="load-more-wrap", [
+            @html.button(click=LoadMore, class="load-more-btn", [
+              text(if model.loading { "加载中..." } else { "加载更多" }),
+            ]),
+          ])
+        } else {
+          @html.div([text("已到底部")]) // 没有更多了，可换成提示文本
+        },
       ])
     },
   ])
@@ -471,7 +278,7 @@ fn initArticles() -> (@tea.Cmd[ArticleMsg], ArticleModel) {
       error: None,
       names: @list.of([]),
       items: @list.of([]),
-      page_size: 3, // 默认每次加载 6 篇，可自行修改
+      page_size: 6, // 默认每次加载 6 篇，可自行修改
       loaded_count: 0,
     },
   )
@@ -648,23 +455,12 @@ fn startArticlesApp() -> Unit {
     initialize~,
     update=articleUpdate,
     view=articleListView,
-    mount="articles",
+    mount="articlesContainer",
   )
 }
 
 ///|
 /// 启动
 fn main {
-  let model = {
-    nav: {
-      navItems: ["首页", "文章", "关于"],
-      path: ["index.html", "./articles.html", "./about.html"],
-    },
-    current: "首页",
-    current_path: "/",
-  }
-  startPersonApp()
-  //articlesIntro()
-  @tea.startup(model~, update~, view~, mount="nav-container")
   startArticlesApp()
 }
